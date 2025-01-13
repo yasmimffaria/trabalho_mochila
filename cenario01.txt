@@ -1,0 +1,19 @@
+# Instancia C: Desenvolvimento de Produto
+K 75
+N 15
+I Autenticacao_Usuario 5 12
+I Criptografia_Dados 7 14
+I Suporte_Multi_Idiomas 6 10
+I Integracao_Cloud 8 16
+I Processamento_Em_Tempo_Real 9 18
+I Acesso_Offline 4 8
+I Compatibilidade_Mobile 5 13
+I Reconhecimento_Voz 6 11
+I Notificacoes_Push 4 7
+I Painel_Analitico 10 20
+I Gateway_Pagamento 8 19
+I Integracao_Midias_Sociais 3 5
+I Temas_Customizaveis 4 9
+I Suporte_Multi_Dispositivo 5 10
+I Gerenciamento_Estoque 6 14
+F
