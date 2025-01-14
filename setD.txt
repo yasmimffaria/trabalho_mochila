@@ -1,0 +1,23 @@
+# Instancia D: Gerenciamento de Projetos
+K 350
+N 19
+I Atualizacao_Infrastructure 25 50
+I Campanha_Marketing 30 60
+I Desenvolvimento_Produto 40 80
+I Pesquisa_e_Desenvolvimento 35 70
+I Treinamento_Equipe 20 40
+I Atualizacao_Sistema_TI 50 100
+I Iniciativa_Sustentabilidade 45 90
+I Melhorias_Ciberseguranca 25 55
+I Programa_Retencao_Clientes 30 65
+I Lancamento_Nova_Marca 40 85
+I Expansao_Facilidade 55 110
+I Automacao_Processos 30 60
+I Otimizacao_Cadeia_Suprimentos 50 105
+I Desenvolvimento_App_Mobile 25 55
+I Migracao_Para_Cloud 40 80
+I Adocao_Energia_Verde 35 70
+I Programa_BemEstar_Colaboradores 15 35
+I Melhorias_Controle_Qualidade 20 45
+I Planejamento_Gestao_Crise 30 65
+F

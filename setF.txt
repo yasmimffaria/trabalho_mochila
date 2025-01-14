@@ -1,0 +1,22 @@
+# Instancia F: Dieta
+K 63
+N 18
+I Arroz 5 10
+I Feijao 4 12
+I Frango 8 20
+I Carne_de_Vaca 10 25
+I Peixe 9 22
+I Ovos 3 9
+I Leite 4 11
+I Pao 2 6
+I Vegetais 3 10
+I Frutas 4 12
+I Queijo 6 15
+I Castanhas 7 18
+I Iogurte 5 13
+I Lentilhas 4 11
+I Macarrao 5 10
+I Cereal 3 8
+I Manteiga_de_amendoim 6 14
+I Azeite_de_oliva 7 19
+F

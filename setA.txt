@@ -1,0 +1,24 @@
+# Instancia A: Planejamento de Investimentos Financeiros
+K 70000
+N 20
+I Acoes_Tecnologia 10000 0.9
+I Acoes_Energia 8000 0.75
+I Acoes_Saude 6000 0.65
+I Acoes_Imobiliarias 12000 0.85
+I Acoes_Industriais 5000 0.55
+I Acoes_Bancos 7000 0.8
+I Acoes_Consumo 3000 0.4
+I Acoes_Varejo 9000 0.7
+I Acoes_Infraestrutura 15000 0.9
+I Acoes_Alimentos 4000 0.5
+I Acoes_Mineracao 11000 0.8
+I Acoes_Transporte 10000 0.75
+I Acoes_Turismo 6000 0.6
+I Acoes_Agronegocio 5000 0.65
+I Acoes_Software 7000 0.85
+I Acoes_Automotivas 3000 0.4
+I Acoes_Aeroespacial 15000 0.95
+I Acoes_Mineracao_2 4000 0.55
+I Acoes_Comercio_Exterior 8000 0.8
+I Acoes_Fintech 9500 0.85
+F

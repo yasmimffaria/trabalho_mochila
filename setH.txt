@@ -1,0 +1,29 @@
+# Instancia H: Missao Espacial
+K 500
+N 25
+I Tanques_de_oxigenio 50 200
+I Pacotes_de_comida 40 150
+I Contedores_de_agua 45 180
+I Roupas_espaciais 60 300
+I Instrumentos_cientificos 70 400
+I Equipamento_de_comunicacao 55 350
+I Componentes_de_satelite 80 500
+I Painel_solar 65 450
+I Suprimentos_medicos 30 250
+I Baterias_de_backup 25 200
+I Sistemas_de_navegacao 50 320
+I Escudos_radiacao 75 450
+I Ferramentas_de_manutencao 35 100
+I Itens_pessoais 10 50
+I Pecas_de_rover 85 600
+I Suprimentos_para_estufa 45 300
+I Unidades_de_vivencia_astro 90 550
+I Kit_de_reparo_emergencial 20 150
+I Telescopio_espacial 100 700
+I Unidades_de_armazenamento_de_dados 15 120
+I Kits_experimentais 30 200
+I Combustivel_de_foguete 120 800
+I Sistemas_de_gerenciamento_de_residuos 40 150
+I Sistemas_de_refrigeração 55 400
+I Câmeras_de_alta_definicao 25 220
+F

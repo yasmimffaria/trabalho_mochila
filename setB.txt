@@ -1,0 +1,27 @@
+# Instancia B: Logistica e Transporte
+K 70
+N 23
+I Eletronicos 5 12
+I Moveis 6 10
+I Roupas 4 7
+I Eletrodomesticos 8 18
+I Livros 7 14
+I Brinquedos 3 5
+I Alimentos 2 4
+I Melhorias_Residenciais 6 13
+I Pecas_Automotivas 9 20
+I Materiais_de_Escritorio 1 2
+I Artigos_Esportivos 5 10
+I Cosmeticos 3 6
+I Equipamentos_Medicos 2 4
+I Maquinas_Industriais 7 15
+I Produtos_de_Arte 4 8
+I Artigos_para_Pets 6 12
+I Iluminacao 5 9
+I Artigos_de_Jardinagem 4 11
+I Produtos_de_Limpeza 8 17
+I Ferramentas 3 5
+I Componentes_Eletricos 7 14
+I Equipamentos_de_Fitness 9 22
+I Bagagens 4 9
+F

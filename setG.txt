@@ -1,0 +1,23 @@
+# Instancia G: Transporte Internacional
+K 100
+N 19
+I Eletronicos 5 12
+I Maquinarios 8 20
+I Moveis 10 18
+I Veiculos 15 40
+I Roupas 6 10
+I Produtos_alimenticios 12 25
+I Suprimentos_medicos 8 30
+I Quimicos 10 35
+I Materiais_de_construcao 20 50
+I Textil 7 15
+I Farmaceuticos 6 28
+I Brinquedos 5 10
+I Itens_domesticos 10 22
+I Joias 2 40
+I Arte_e_antiguidades 3 50
+I Ferramentas_industriais 8 18
+I Vinhos_e_queijos_especiais 9 23
+I Livros_e_material_de_escritorio 4 8
+I Equipamentos_renovaveis 18 38
+F

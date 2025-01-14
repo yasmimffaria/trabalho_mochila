@@ -1,0 +1,21 @@
+# Instancia E: Planejamento de Viagem
+K 20
+N 17
+I Roupas 3 10
+I Sapatos 4 8
+I Artigos_de_Higiene 2 5
+I Camera 3 12
+I Laptop 4 15
+I Power_Bank 2 8
+I Lanches 1 3
+I Garrafa_de_Agua 2 7
+I Almofada_de_Viagem 1 5
+I Jaqueta 5 14
+I Guia_de_Viagem 2 6
+I Oculos_de_Sol 1 4
+I Kit_de_Medicina 1 9
+I Carregadores_e_Cabos 2 7
+I Livros 3 8
+I Souvenires 4 10
+I Relogio 1 6
+F
