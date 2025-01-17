@@ -1,0 +1,447 @@
+Index: mochila.c
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#include <stdlib.h>\n#include <stdio.h>\n#include <string.h>\n\ntypedef struct tipoMochila {\n  int K; // peso máximo da mochila\n  int N; // número total de itens no universo\n  char *nome[50]; // nome do item\n  float peso[50]; // peso do item\n  float beneficio[50]; // benefício do item\n} tipoMochila;\n\ntipoMochila criar_mochila(char *StrEntrada) {\n    char Controle; // lê o caracter e decide o que faz\n    char auxFinalLinha;  // auxiliar para ir para próxima linha\n    int cont = 0; // contador de itens\n\n    tipoMochila Mochila;\n    FILE *arquivo = fopen(StrEntrada, \"r\");\n\n    if (arquivo == NULL) {\n      printf(\"Erro ao abrir arquivo\\n\");\n      exit(1);\n    }\n\n    do {\n        fscanf(arquivo, \"%c\", &Controle);\n        switch (Controle) {\n          case 'K':\n              fscanf(arquivo, \"%d\", &Mochila.K);\n              break;\n          case 'N':\n              fscanf(arquivo, \"%d\", &Mochila.N);\n              break;\n          case 'I':\n              // Aloca memória para a string do nome\n              Mochila.nome[cont] = malloc(50 * sizeof(char));\n              if (Mochila.nome[cont] == NULL) {\n                  printf(\"Erro de memória\\n\");\n                  exit(1);\n              }\n              fscanf(arquivo, \"%s %f %f\", Mochila.nome[cont], &Mochila.peso[cont], &Mochila.beneficio[cont]);\n              cont++;\n              break;\n          case '#':\n                /* Lê o restante da linha, até chegar no final de linha '\\n' */\n                do {\n                    fscanf(arquivo, \"%c\", &auxFinalLinha);\n                } while (auxFinalLinha != '\\n');\n                break;\n          case 'F':\n              fclose(arquivo);\n              break;\n\n        }\n    } while (Controle != 'F');\n\n    return Mochila;\n}\n\nint main(int argc, char **argv) {\n    char* StrEntrada;\n    tipoMochila Mochila;\n\n    /* Testa se a quantidade de parâmetros informada está correta */\n    if (argc != 2) {\n        printf(\"\\nErro de Sintaxe\\n\");\n        printf(\"Usar: ./solver-mochila.bin <entrada>\\n\\n\");\n        return 1;\n    }\n\n    /* Obtém os parâmetros informados */\n    StrEntrada = argv[1];\n    Mochila = criar_mochila(StrEntrada);\n\n    printf(\"K = %d\\n\", Mochila.K);\n    printf(\"N = %d\\n\", Mochila.N);\n    for (int i = 0; i < Mochila.N; i++) {\n        printf(\"Item: %s P: %f B: %f \\n\", Mochila.nome[i], Mochila.peso[i], Mochila.beneficio[i]);\n        free(Mochila.nome[i]); // Libera a memória alocada para o nome\n    }\n\n    return 0;\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/mochila.c b/mochila.c
+--- a/mochila.c	(revision 7c657eb6b7e593e400096c2df79680015823819b)
++++ b/mochila.c	(date 1737109957988)
+@@ -3,82 +3,109 @@
+ #include <string.h>
+ 
+ typedef struct tipoMochila {
+-  int K; // peso máximo da mochila
+-  int N; // número total de itens no universo
+-  char *nome[50]; // nome do item
+-  float peso[50]; // peso do item
+-  float beneficio[50]; // benefício do item
++    int K;               // peso maximo da mochila
++    int N;               // numero total de itens no universo
++    char *nome[50];      // nome do item
++    float peso[50];      // peso do item
++    float beneficio[50]; // beneficio do item
+ } tipoMochila;
+ 
+ tipoMochila criar_mochila(char *StrEntrada) {
+-    char Controle; // lê o caracter e decide o que faz
++    // Funcao cria uma nova mochila, lendo do arquivo e trazendo todos os dados do txt para a memoria
++
++    // declaracao de variaveis
++    char Controle;       // le o caracter e decide o que faz
+     char auxFinalLinha;  // auxiliar para ir para próxima linha
+-    int cont = 0; // contador de itens
++    int cont = 0;        // contador de itens
++    tipoMochila Mochila; // declaracao da mochila em si
+ 
+-    tipoMochila Mochila;
++    // arquivo de ponteiro pro txt
+     FILE *arquivo = fopen(StrEntrada, "r");
+ 
++    //testa pra ver se abriu o arquivo corretamente
+     if (arquivo == NULL) {
+-      printf("Erro ao abrir arquivo\n");
+-      exit(1);
++        printf("Erro ao abrir arquivo\n");
++        exit(1);
+     }
+ 
++    //percorre o arquivo inteiro, olhando cada linha e trazendo ela pra seu devido lugar na memoria
+     do {
++        //olha a primeira letra
+         fscanf(arquivo, "%c", &Controle);
++
++        //ve oq tem que fazer dependendo pra letra lida
+         switch (Controle) {
+-          case 'K':
+-              fscanf(arquivo, "%d", &Mochila.K);
+-              break;
+-          case 'N':
+-              fscanf(arquivo, "%d", &Mochila.N);
+-              break;
+-          case 'I':
+-              // Aloca memória para a string do nome
+-              Mochila.nome[cont] = malloc(50 * sizeof(char));
+-              if (Mochila.nome[cont] == NULL) {
++            //K - Tamanho limite da mochila
++            case 'K':
++                fscanf(arquivo, "%d", &Mochila.K);
++                break;
++
++            //N - Numero de items na lista
++            case 'N':
++                fscanf(arquivo, "%d", &Mochila.N);
++                break;
++
++            //I - Item: Nome Peso Beneficio
++            case 'I':
++                // Aloca memória para a string do nome
++                Mochila.nome[cont] = malloc(50 * sizeof(char));
++                if (Mochila.nome[cont] == NULL) {
+                   printf("Erro de memória\n");
+                   exit(1);
+-              }
+-              fscanf(arquivo, "%s %f %f", Mochila.nome[cont], &Mochila.peso[cont], &Mochila.beneficio[cont]);
+-              cont++;
+-              break;
+-          case '#':
++                }
++                fscanf(arquivo, "%s %f %f", Mochila.nome[cont], &Mochila.peso[cont], &Mochila.beneficio[cont]);
++                cont++;
++                break;
++
++            //# - Ignorar linha
++            case '#':
+                 /* Lê o restante da linha, até chegar no final de linha '\n' */
+                 do {
+                     fscanf(arquivo, "%c", &auxFinalLinha);
+                 } while (auxFinalLinha != '\n');
+                 break;
+-          case 'F':
+-              fclose(arquivo);
+-              break;
+-
++
++            //F - Fim do arquivo.
++            case 'F':
++                fclose(arquivo);
++                break;
+         }
+     } while (Controle != 'F');
+ 
++    //quando chegou no final, retorna a mochila, agora com todos os dados importados do txt
+     return Mochila;
+ }
+ 
+ int main(int argc, char **argv) {
++    // definição de variaveis
+     char* StrEntrada;
+     tipoMochila Mochila;
+ 
+-    /* Testa se a quantidade de parâmetros informada está correta */
++    // confere se o num de argumentos ta certo
+     if (argc != 2) {
+         printf("\nErro de Sintaxe\n");
+         printf("Usar: ./solver-mochila.bin <entrada>\n\n");
+         return 1;
+     }
+ 
+-    /* Obtém os parâmetros informados */
++    //se os argumentos estao certo, recebe eles
+     StrEntrada = argv[1];
++
++    //roda a funcao que cria a mochila e coloca na variavel Mochila
+     Mochila = criar_mochila(StrEntrada);
+ 
++    //para teste
++    //printa todos os itens da mochila
+     printf("K = %d\n", Mochila.K);
+     printf("N = %d\n", Mochila.N);
+     for (int i = 0; i < Mochila.N; i++) {
+-        printf("Item: %s P: %f B: %f \n", Mochila.nome[i], Mochila.peso[i], Mochila.beneficio[i]);
+-        free(Mochila.nome[i]); // Libera a memória alocada para o nome
++        printf("Item: %s P: %.1f B: %.1f \n", Mochila.nome[i], Mochila.peso[i], Mochila.beneficio[i]);
++    }
++
++    //depois que terminou, libera a memoria alocada dos vetores.
++    for (int i = 0; i < Mochila.N; i++) {
++        free(Mochila.nome[i]);
+     }
+ 
+     return 0;
+-}
++}
+\ No newline at end of file
+Index: setA.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/setA.txt b/setA.txt
+new file mode 100644
+--- /dev/null	(date 1737109958092)
++++ b/setA.txt	(date 1737109958092)
+@@ -0,0 +1,24 @@
++# Instancia A: Planejamento de Investimentos Financeiros
++K 70000
++N 20
++I Acoes_Tecnologia 10000 0.9
++I Acoes_Energia 8000 0.75
++I Acoes_Saude 6000 0.65
++I Acoes_Imobiliarias 12000 0.85
++I Acoes_Industriais 5000 0.55
++I Acoes_Bancos 7000 0.8
++I Acoes_Consumo 3000 0.4
++I Acoes_Varejo 9000 0.7
++I Acoes_Infraestrutura 15000 0.9
++I Acoes_Alimentos 4000 0.5
++I Acoes_Mineracao 11000 0.8
++I Acoes_Transporte 10000 0.75
++I Acoes_Turismo 6000 0.6
++I Acoes_Agronegocio 5000 0.65
++I Acoes_Software 7000 0.85
++I Acoes_Automotivas 3000 0.4
++I Acoes_Aeroespacial 15000 0.95
++I Acoes_Mineracao_2 4000 0.55
++I Acoes_Comercio_Exterior 8000 0.8
++I Acoes_Fintech 9500 0.85
++F
+\ No newline at end of file
+Index: setB.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/setB.txt b/setB.txt
+new file mode 100644
+--- /dev/null	(date 1737109958119)
++++ b/setB.txt	(date 1737109958119)
+@@ -0,0 +1,27 @@
++# Instancia B: Logistica e Transporte
++K 70
++N 23
++I Eletronicos 5 12
++I Moveis 6 10
++I Roupas 4 7
++I Eletrodomesticos 8 18
++I Livros 7 14
++I Brinquedos 3 5
++I Alimentos 2 4
++I Melhorias_Residenciais 6 13
++I Pecas_Automotivas 9 20
++I Materiais_de_Escritorio 1 2
++I Artigos_Esportivos 5 10
++I Cosmeticos 3 6
++I Equipamentos_Medicos 2 4
++I Maquinas_Industriais 7 15
++I Produtos_de_Arte 4 8
++I Artigos_para_Pets 6 12
++I Iluminacao 5 9
++I Artigos_de_Jardinagem 4 11
++I Produtos_de_Limpeza 8 17
++I Ferramentas 3 5
++I Componentes_Eletricos 7 14
++I Equipamentos_de_Fitness 9 22
++I Bagagens 4 9
++F
+\ No newline at end of file
+Index: README.md
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+># trabalho_mochila\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/README.md b/README.md
+--- a/README.md	(revision 7c657eb6b7e593e400096c2df79680015823819b)
++++ b/README.md	(date 1737110011509)
+@@ -1,1 +1,4 @@
+-# trabalho_mochila
++# Problema da Mochila (Knapsack Problem) em C
++Descrição:
++
++Este projeto foi desenvolvido como parte das atividades da disciplina de Matemática Discreta, abordando o clássico Problema da Mochila.
+Index: setC.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/setC.txt b/setC.txt
+new file mode 100644
+--- /dev/null	(date 1737109958155)
++++ b/setC.txt	(date 1737109958155)
+@@ -0,0 +1,19 @@
++# Instancia C: Desenvolvimento de Produto
++K 75
++N 15
++I Autenticacao_Usuario 5 12
++I Criptografia_Dados 7 14
++I Suporte_Multi_Idiomas 6 10
++I Integracao_Cloud 8 16
++I Processamento_Em_Tempo_Real 9 18
++I Acesso_Offline 4 8
++I Compatibilidade_Mobile 5 13
++I Reconhecimento_Voz 6 11
++I Notificacoes_Push 4 7
++I Painel_Analitico 10 20
++I Gateway_Pagamento 8 19
++I Integracao_Midias_Sociais 3 5
++I Temas_Customizaveis 4 9
++I Suporte_Multi_Dispositivo 5 10
++I Gerenciamento_Estoque 6 14
++F
+\ No newline at end of file
+Index: setD.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/setD.txt b/setD.txt
+new file mode 100644
+--- /dev/null	(date 1737109958173)
++++ b/setD.txt	(date 1737109958173)
+@@ -0,0 +1,23 @@
++# Instancia D: Gerenciamento de Projetos
++K 350
++N 19
++I Atualizacao_Infrastructure 25 50
++I Campanha_Marketing 30 60
++I Desenvolvimento_Produto 40 80
++I Pesquisa_e_Desenvolvimento 35 70
++I Treinamento_Equipe 20 40
++I Atualizacao_Sistema_TI 50 100
++I Iniciativa_Sustentabilidade 45 90
++I Melhorias_Ciberseguranca 25 55
++I Programa_Retencao_Clientes 30 65
++I Lancamento_Nova_Marca 40 85
++I Expansao_Facilidade 55 110
++I Automacao_Processos 30 60
++I Otimizacao_Cadeia_Suprimentos 50 105
++I Desenvolvimento_App_Mobile 25 55
++I Migracao_Para_Cloud 40 80
++I Adocao_Energia_Verde 35 70
++I Programa_BemEstar_Colaboradores 15 35
++I Melhorias_Controle_Qualidade 20 45
++I Planejamento_Gestao_Crise 30 65
++F
+\ No newline at end of file
+Index: setE.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/setE.txt b/setE.txt
+new file mode 100644
+--- /dev/null	(date 1737109958197)
++++ b/setE.txt	(date 1737109958197)
+@@ -0,0 +1,21 @@
++# Instancia E: Planejamento de Viagem
++K 20
++N 17
++I Roupas 3 10
++I Sapatos 4 8
++I Artigos_de_Higiene 2 5
++I Camera 3 12
++I Laptop 4 15
++I Power_Bank 2 8
++I Lanches 1 3
++I Garrafa_de_Agua 2 7
++I Almofada_de_Viagem 1 5
++I Jaqueta 5 14
++I Guia_de_Viagem 2 6
++I Oculos_de_Sol 1 4
++I Kit_de_Medicina 1 9
++I Carregadores_e_Cabos 2 7
++I Livros 3 8
++I Souvenires 4 10
++I Relogio 1 6
++F
+\ No newline at end of file
+Index: setF.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/setF.txt b/setF.txt
+new file mode 100644
+--- /dev/null	(date 1737109958217)
++++ b/setF.txt	(date 1737109958217)
+@@ -0,0 +1,22 @@
++# Instancia F: Dieta
++K 63
++N 18
++I Arroz 5 10
++I Feijao 4 12
++I Frango 8 20
++I Carne_de_Vaca 10 25
++I Peixe 9 22
++I Ovos 3 9
++I Leite 4 11
++I Pao 2 6
++I Vegetais 3 10
++I Frutas 4 12
++I Queijo 6 15
++I Castanhas 7 18
++I Iogurte 5 13
++I Lentilhas 4 11
++I Macarrao 5 10
++I Cereal 3 8
++I Manteiga_de_amendoim 6 14
++I Azeite_de_oliva 7 19
++F
+\ No newline at end of file
+Index: setG.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/setG.txt b/setG.txt
+new file mode 100644
+--- /dev/null	(date 1737109958247)
++++ b/setG.txt	(date 1737109958247)
+@@ -0,0 +1,23 @@
++# Instancia G: Transporte Internacional
++K 100
++N 19
++I Eletronicos 5 12
++I Maquinarios 8 20
++I Moveis 10 18
++I Veiculos 15 40
++I Roupas 6 10
++I Produtos_alimenticios 12 25
++I Suprimentos_medicos 8 30
++I Quimicos 10 35
++I Materiais_de_construcao 20 50
++I Textil 7 15
++I Farmaceuticos 6 28
++I Brinquedos 5 10
++I Itens_domesticos 10 22
++I Joias 2 40
++I Arte_e_antiguidades 3 50
++I Ferramentas_industriais 8 18
++I Vinhos_e_queijos_especiais 9 23
++I Livros_e_material_de_escritorio 4 8
++I Equipamentos_renovaveis 18 38
++F
+\ No newline at end of file
+Index: setH.txt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/setH.txt b/setH.txt
+new file mode 100644
+--- /dev/null	(date 1737109958272)
++++ b/setH.txt	(date 1737109958272)
+@@ -0,0 +1,29 @@
++# Instancia H: Missao Espacial
++K 500
++N 25
++I Tanques_de_oxigenio 50 200
++I Pacotes_de_comida 40 150
++I Contedores_de_agua 45 180
++I Roupas_espaciais 60 300
++I Instrumentos_cientificos 70 400
++I Equipamento_de_comunicacao 55 350
++I Componentes_de_satelite 80 500
++I Painel_solar 65 450
++I Suprimentos_medicos 30 250
++I Baterias_de_backup 25 200
++I Sistemas_de_navegacao 50 320
++I Escudos_radiacao 75 450
++I Ferramentas_de_manutencao 35 100
++I Itens_pessoais 10 50
++I Pecas_de_rover 85 600
++I Suprimentos_para_estufa 45 300
++I Unidades_de_vivencia_astro 90 550
++I Kit_de_reparo_emergencial 20 150
++I Telescopio_espacial 100 700
++I Unidades_de_armazenamento_de_dados 15 120
++I Kits_experimentais 30 200
++I Combustivel_de_foguete 120 800
++I Sistemas_de_gerenciamento_de_residuos 40 150
++I Sistemas_de_refrigeração 55 400
++I Câmeras_de_alta_definicao 25 220
++F
+\ No newline at end of file
