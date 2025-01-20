@@ -10,6 +10,27 @@ typedef struct tipoMochila {
     float beneficio[50]; // beneficio do item
 } tipoMochila;
 
+void imprimirVet(int Vet[], int n) {
+    printf("####Vetor##### \n");
+    for (int i = 0; i < n; i++) {
+        printf("%d \n", Vet[i]);
+    }
+
+}
+
+void contarBinario(int numero, int n) {
+    int Vet[n];
+    for (int i = n - 1; i >= 0; i--) {
+       int bit = (numero / (int)pow(2, i)) % 2; // 1/4 = 0 0 mod 2 = 0  0 mod 2
+        //printf("%d ---\n", bit);
+        Vet[n - 1 - i] = bit; //pego n -1 - i ; por exemplo de n=3  i= 2   => 3-1-2 = 0  , para contar em ordem crescente 
+
+    }
+    //chama a função que imprime o vetor
+    imprimirVet(Vet, n);
+
+}
+
 tipoMochila criar_mochila(char *StrEntrada) {
     // Funcao cria uma nova mochila, lendo do arquivo e trazendo todos os dados do txt para a memoria
 
@@ -106,6 +127,22 @@ int main(int argc, char **argv) {
     for (int i = 0; i < Mochila.N; i++) {
         free(Mochila.nome[i]);
     }
+
+    //para teste o contador 
+    printf("Digite o valor de n para mostrar as representações binárias de 0 até 2^n - 1: ");
+    scanf("%d", &n);
+
+    //se eu tiver 3 itens, vou ter 8 combinações possiveis
+    int limite = pow(2,n); 
+
+
+    //exibe todos os números de 0 até 2^n - 1 em binário, ou seja se tiver 4 itens vai pecorrer de 0 a 15
+    for (int i = 0; i < limite; i++) {
+        
+        contarBinario(i, n); // exemplo 1,4
+        printf("\n");
+    }
+
 
     return 0;
 }
