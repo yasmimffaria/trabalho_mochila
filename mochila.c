@@ -14,43 +14,24 @@ typedef struct tipoMochila {
     float razao[MAXTAM];     // razão entre o beneficio e o peso 
 } tipoMochila;
 
-//Função de teste para imprimir um vetor 
-void imprimirVet(int Vet[], int n) {
-    printf("\n");
-    printf("####Vetor##### \n");
-
-    for (int i = 0; i < n; i++) {
-        printf("%d", Vet[i]);
-    }
-    printf("\n");
-
-}
-
-
-//Tranforma um numero x em um vetor binario onde  quantidade de posições é equivalente a quantidade de bits 
-// do numero.
-void contarBinario(int numero, int n, int* Vet) {
+// Transforma o vetor "Vet" em uma representacao binaria do valor "numero"
+// EX: 5 => [1,0,1]
+void contarBinario(int numero, int n, int Vet[]) {
     for (int i = n - 1; i >= 0; i--) {
        int bit = (numero / (int)pow(2, i)) % 2; // 1/4 = 0 0 mod 2 = 0  0 mod 2
         //printf("%d ---\n", bit);
-        Vet[n - 1 - i] = bit; //pego n -1 - i ; por exemplo de n=3  i= 2   => 3-1-2 = 0  , para contar em ordem crescente 
-
+        Vet[n - 1 - i] = bit; //pego n -1 - i ; por exemplo de n=3  i= 2   => 3-1-2 = 0  , para contar em ordem crescente
     }
-    //chama a função que imprime o vetor
-    imprimirVet(Vet, n);
-
 }
 
 //calcula o peso de um subconjunto e retorna o peso total 
 float calcula_peso(tipoMochila mochila, int vetor[MAXTAM]){
     float peso_total=0;
     for  (int i =0; i<mochila.N; i++){
-
         if(vetor[i]==1){
             peso_total+= mochila.peso[i];
         }
     }
-    
     return peso_total;
 }
 
@@ -58,7 +39,6 @@ float calcula_peso(tipoMochila mochila, int vetor[MAXTAM]){
 float calcula_beneficio(tipoMochila mochila, int vetor[MAXTAM]){
     float beneficio_total=0;
     for  (int i =0; i<mochila.N; i++){
-
         if(vetor[i]==1){
             beneficio_total+= mochila.beneficio[i];
         }
@@ -66,9 +46,8 @@ float calcula_beneficio(tipoMochila mochila, int vetor[MAXTAM]){
     return beneficio_total;
 }
 
+// Traz a mochila de um arquivo, e guarda na struct que é usada de retorno
 tipoMochila criar_mochila(char *StrEntrada) {
-    // Funcao cria uma nova mochila, lendo do arquivo e trazendo todos os dados do txt para a memoria
-
     // declaracao de variaveis
     char Controle;       // le o caracter e decide o que faz
     char auxFinalLinha;  // auxiliar para ir para próxima linha
@@ -104,6 +83,7 @@ tipoMochila criar_mochila(char *StrEntrada) {
             //I - Item: Nome Peso Beneficio
             case 'I':
                 fscanf(arquivo, "%s %f %f", Mochila.nome[cont], &Mochila.peso[cont], &Mochila.beneficio[cont]);
+                Mochila.razao[cont] = Mochila.beneficio[cont] / Mochila.peso[cont]; //calcula a razao
                 cont++;
                 break;
 
@@ -122,8 +102,82 @@ tipoMochila criar_mochila(char *StrEntrada) {
         }
     } while (Controle != 'F');
 
+    //se no final, o contador contou um numero de itens diferente do valor que esta no N,
+    // para o programa, pois isso ta errado
+    if (cont != Mochila.N) {
+        printf("Numero de itens incompativel com o valor de N\n");
+        exit(1);
+    }
+
     //quando chegou no final, retorna a mochila, agora com todos os dados importados do txt
     return Mochila;
+}
+
+// Printa um Vetor
+void imprimirVet(int Vet[], int n) {
+    printf("\n");
+    printf("####Vetor##### \n");
+
+    for (int i = 0; i < n; i++) {
+        printf("%d", Vet[i]);
+    }
+    printf("\n");
+
+}
+
+// Printa todos os itens e detalhes da mochila
+void imprimirMochila(tipoMochila mochila) {
+    //printa o header
+    printf("\n ======================================================================================");
+    printf("\n |                                   M O C H I L A                                    |");
+    printf("\n |====================================================================================|");
+    printf("\n | Numero de itens (N): %-61d |", mochila.N);
+    printf("\n | Limite de peso  (K): %-61d |", mochila.K);
+    printf("\n |====================================================================================|");
+    printf("\n | ITEM                                  | PESO         | BENEFICIO    | RAZAO        |");
+    printf("\n |=======================================|==============|==============|==============|");
+
+    //printa os items em si
+    for (int i = 0; i < mochila.N; i++) {
+        printf("\n | %-37s | %-12g | %-12g | %-12g |", mochila.nome[i], mochila.peso[i], mochila.beneficio[i], mochila.razao[i]);
+    }
+
+    //printa o final
+    printf("\n ======================================================================================\n");
+}
+
+// Printa todos os subconjuntos do conjunto potencia
+void imprimirPotencia(tipoMochila mochila){
+    //cria um vetor pra representar o subconjunto
+    int subconjunto[mochila.N];
+
+    //printa o header
+    printf("\n ======================================================================================");
+    printf("\n |                         C O N J U N T O    P O T E N C I A                         |");
+    printf("\n |====================================================================================|");
+    printf("\n | MAPA DE BITS                             | P TOTAL            | B TOTAL            |");
+    printf("\n |==========================================|====================|====================|");
+
+    // passa por todas as possiveis combinacoes
+    for(int i = 0; i < pow(2,mochila.N); i++){
+        // atualiza o subconjunto
+        contarBinario(i, mochila.N, subconjunto);
+
+        //cria uma versao do mapa de bits que e na vdd uma string
+        // assim, e mais facil de printar
+        int tam = sizeof(subconjunto) / sizeof(subconjunto[0]);
+        char subString[tam+1]; // adiciona mais um pra ter o \0 q strings precisam
+        for(int j = 0; j < tam; j++){
+          subString[j] = subconjunto[j] ? '1' : '0';  // se tiver um 1, troca pelo caractere '1', se n, coloca '0'
+        }
+        subString[tam] = '\0'; // coloca o final da string
+
+        //agora printa a linha corretamente
+        printf("\n | %-40s | %-18g | %-18g |", subString, calcula_peso(mochila, subconjunto),calcula_beneficio(mochila, subconjunto));
+    }
+
+    //printa o fim
+    printf("\n ======================================================================================\n");
 }
 
 int main(int argc, char **argv) {
@@ -141,37 +195,18 @@ int main(int argc, char **argv) {
     //se os argumentos estao certo, recebe eles
     StrEntrada = argv[1];
 
-    //roda a funcao que cria a mochila e coloca na variavel Mochila
+    //roda a funcao que pega a mochila do arquivo e coloca na variavel Mochila
     Mochila = criar_mochila(StrEntrada);
 
-    //para teste
-    //printa todos os itens da mochila
-    printf("K = %d\n", Mochila.K);
-    printf("N = %d\n", Mochila.N);
-    for (int i = 0; i < Mochila.N; i++) {
-        printf("Item: %s P: %.1f B: %.1f \n", Mochila.nome[i], Mochila.peso[i], Mochila.beneficio[i]);
-    }
-    
-    int n;
-    //para teste o contador 
-    printf("Digite o valor de n para mostrar as representações binárias de 0 até 2^n - 1: ");
-    scanf("%d", &n);
+    //=======TESTE=======
 
-    //se eu tiver 3 itens, vou ter 8 combinações possiveis
-    int limite = pow(2,n); 
+    //mostra a mochila
+    imprimirMochila(Mochila);
 
-    //exibe todos os números de 0 até 2^n - 1 em binário, ou seja se tiver 4 itens vai pecorrer de 0 a 15
-    int sub_conjunto[n];
-    printf("\n");
-    for (int i = 0; i < limite; i++) {
-        
-        contarBinario(i,n,sub_conjunto);
+    //mostra os conjuntos
+    imprimirPotencia(Mochila);
 
-        printf("PESO: %.2f \n",calcula_peso(Mochila, sub_conjunto) );
-        printf("BENEFICIO: %.2f \n",calcula_beneficio(Mochila, sub_conjunto) );
-        printf("\n");
-    }
-    printf("\n");
+    //=====TESTE-FIM=====
 
     return 0;
 }
