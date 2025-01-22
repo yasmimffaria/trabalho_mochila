@@ -153,9 +153,9 @@ void imprimirPotencia(tipoMochila mochila){
 
     //printa o header
     printf("\n ======================================================================================");
-    printf("\n |                         C O N J U N T O    P O T E N C I A                         |");
+    printf("\n |                          C O N J U N T O   P O T E N C I A                         |");
     printf("\n |====================================================================================|");
-    printf("\n | MAPA DE BITS                             | P TOTAL            | B TOTAL            |");
+    printf("\n | MAPA DE BITS                             | PESO TOTAL         | BENEFICIO TOTAL    |");
     printf("\n |==========================================|====================|====================|");
 
     // passa por todas as possiveis combinacoes
