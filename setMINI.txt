@@ -1,9 +1,0 @@
-# mini conjunto para testes
-K 80
-N 5
-I item1 10 5.3
-I Segundo 4 10.15
-I TRES 3 4.1
-I quadrado 1 2
-I Five 2 5
-F
