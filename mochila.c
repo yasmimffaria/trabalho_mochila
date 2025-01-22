@@ -151,7 +151,8 @@ int main(int argc, char **argv) {
     for (int i = 0; i < Mochila.N; i++) {
         printf("Item: %s P: %.1f B: %.1f \n", Mochila.nome[i], Mochila.peso[i], Mochila.beneficio[i]);
     }
-int n;
+    
+    int n;
     //para teste o contador 
     printf("Digite o valor de n para mostrar as representações binárias de 0 até 2^n - 1: ");
     scanf("%d", &n);
@@ -159,30 +160,18 @@ int n;
     //se eu tiver 3 itens, vou ter 8 combinações possiveis
     int limite = pow(2,n); 
 
-    
-
-
     //exibe todos os números de 0 até 2^n - 1 em binário, ou seja se tiver 4 itens vai pecorrer de 0 a 15
     int sub_conjunto[n];
     printf("\n");
     for (int i = 0; i < limite; i++) {
-       
-       contarBinario(i,n,sub_conjunto);
-       
         
+        contarBinario(i,n,sub_conjunto);
 
         printf("PESO: %.2f \n",calcula_peso(Mochila, sub_conjunto) );
         printf("BENEFICIO: %.2f \n",calcula_beneficio(Mochila, sub_conjunto) );
         printf("\n");
-
-
-
-
-
     }
     printf("\n");
-
-
 
     return 0;
 }
