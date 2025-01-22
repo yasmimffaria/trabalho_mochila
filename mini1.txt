@@ -1,0 +1,7 @@
+# MINI 1
+K 100
+N 3
+I maca 10 2.5
+I banana 20 3.0
+I laranja 15 1.8
+F

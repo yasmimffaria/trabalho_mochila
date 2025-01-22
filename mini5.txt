@@ -1,0 +1,10 @@
+# MINI 5
+K 500
+N 6
+I cafe 200 15.5
+I leite 100 5.0
+I pao 150 3.0
+I manteiga 50 10.0
+I queijo 120 20.0
+I presunto 80 12.0
+F

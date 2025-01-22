@@ -1,0 +1,9 @@
+# MINI 3
+K 150
+N 5
+I notebook 5 3500.0
+I celular 10 1500.0
+I tablet 8 2000.0
+I fone 12 350.0
+I smartwatch 20 800.0
+F

@@ -1,0 +1,6 @@
+# MINI 2
+K 50
+N 2
+I arroz 30 12.0
+I feijao 25 9.5
+F
