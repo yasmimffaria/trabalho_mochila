@@ -46,6 +46,8 @@ float calcula_beneficio(tipoMochila mochila, int vetor[MAXTAM]){
     return beneficio_total;
 }
 
+
+
 // Traz a mochila de um arquivo, e guarda na struct que é usada de retorno
 tipoMochila criar_mochila(char *StrEntrada) {
     // declaracao de variaveis
@@ -180,6 +182,50 @@ void imprimirPotencia(tipoMochila mochila){
     printf("\n ======================================================================================\n");
 }
 
+void enumeracao(tipoMochila mochila, int vetOtimo[], float *peso_otimo, float *beneficio_otimo){
+
+        
+        *beneficio_otimo=0;
+        *peso_otimo=0;
+        vetOtimo[0];
+        int vet_auxiliar[mochila.N];
+
+        for(int i =0; i<pow(2,mochila.N); i++){
+            contarBinario(i, mochila.N, vet_auxiliar);
+
+            if(calcula_peso(mochila, vet_auxiliar)<=mochila.K){
+                if(calcula_beneficio(mochila, vet_auxiliar)> *beneficio_otimo ){
+                    vetOtimo = vet_auxiliar;
+                    *beneficio_otimo = calcula_beneficio(mochila, vet_auxiliar);
+    
+                    *peso_otimo = calcula_peso(mochila, vet_auxiliar);
+                    for ( int i=0; i<mochila.N; i++)
+                    {
+                        printf("%d ",vetOtimo[i] );
+                    }
+                    
+                }
+            }
+            else{
+                
+
+            }
+        }
+        
+
+        printf("\n");
+        printf("Este é o melhor subconjunto pelo metodo da Enumeracao");
+        printf("\n");
+        for (int i=0; i<mochila.N; i++){
+            printf("%d ",vetOtimo[i] ); 
+        }
+        printf("\n");
+        printf("Tendo o Peso : %f", *peso_otimo);
+        printf("\n");
+        printf("Tendo o beneficio :%f ", *beneficio_otimo);
+         
+}
+
 int main(int argc, char **argv) {
     // definição de variaveis
     char* StrEntrada;
@@ -195,6 +241,7 @@ int main(int argc, char **argv) {
     //se os argumentos estao certo, recebe eles
     StrEntrada = argv[1];
 
+    
     //roda a funcao que pega a mochila do arquivo e coloca na variavel Mochila
     Mochila = criar_mochila(StrEntrada);
 
@@ -206,7 +253,12 @@ int main(int argc, char **argv) {
     //mostra os conjuntos
     imprimirPotencia(Mochila);
 
-    //=====TESTE-FIM=====
 
+    int vetOtimo[Mochila.N];
+    float peso_otimo;
+    float beneficio_otimo;
+    enumeracao(Mochila, vetOtimo, &peso_otimo, &beneficio_otimo);
+
+    //=====TESTE-FIM=====
     return 0;
 }
