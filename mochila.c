@@ -199,17 +199,6 @@ void enumeracao(tipoMochila mochila, int vetOtimo[], float *peso_otimo, float *b
 
                     *beneficio_otimo = calcula_beneficio(mochila, vet_auxiliar);
                     *peso_otimo = calcula_peso(mochila, vet_auxiliar);
-                    int cont = 1;
-                    for ( int i=0; i<mochila.N; i++){
-                        //printf(  "%d",cont  );
-                        printf("%d ",vetOtimo[i] );
-                        if(cont == mochila.N){
-                          printf(" \n");
-                        }
-                        cont++;
-                    }
-
-                    
                 }
             }
         }
@@ -226,6 +215,42 @@ void enumeracao(tipoMochila mochila, int vetOtimo[], float *peso_otimo, float *b
         printf("\n");
         printf("Tendo o beneficio :%g ", *beneficio_otimo);
          
+}
+
+void heuristica(tipoMochila mochila, int vetOtimo[]){
+    int vetorIndices[mochila.N];
+    int cont=0;
+
+    //vetor para controlar se aquele item ja foi selecionado
+    int selecionado[mochila.N];
+    for (int i = 0; i < mochila.N; i++) {
+        selecionado[i] = 0;
+    }
+
+    do{
+        int indiceMaiorRazao = -1;
+        float maiorRazao = -1;
+
+        //encontra o indice com maior razao q n foi selecionado
+        for (int i = 0; i < mochila.N; i++) {
+            if (!selecionado[i] && mochila.razao[i] > maiorRazao) {
+                maiorRazao = mochila.razao[i];
+                indiceMaiorRazao = i;
+            }
+        }
+
+        // coloca o indice encontrado como selecionado no vetor
+        selecionado[indiceMaiorRazao] = 1;
+
+        vetorIndices[cont] = indiceMaiorRazao;
+        cont++;
+    }while(cont < mochila.N);
+
+    
+    printf("\n VETOR INDICES \n");
+    for(int j=0 ; j<mochila.N ; j++){
+        printf("%d ", vetorIndices[j]);
+    }
 }
 
 int main(int argc, char **argv) {
@@ -261,6 +286,8 @@ int main(int argc, char **argv) {
     float beneficio_otimo;
     enumeracao(Mochila, vetOtimo, &peso_otimo, &beneficio_otimo);
 
+    printf("\n\n");
+    heuristica(Mochila, vetOtimo);
     //=====TESTE-FIM=====
     return 0;
 }
