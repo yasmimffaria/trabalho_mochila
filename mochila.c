@@ -183,8 +183,6 @@ void imprimirPotencia(tipoMochila mochila){
 }
 
 void enumeracao(tipoMochila mochila, int vetOtimo[], float *peso_otimo, float *beneficio_otimo){
-
-        
         *beneficio_otimo=0;
         *peso_otimo=0;
         vetOtimo[0];
@@ -195,20 +193,24 @@ void enumeracao(tipoMochila mochila, int vetOtimo[], float *peso_otimo, float *b
 
             if(calcula_peso(mochila, vet_auxiliar)<=mochila.K){
                 if(calcula_beneficio(mochila, vet_auxiliar)> *beneficio_otimo ){
-                    vetOtimo = vet_auxiliar;
-                    *beneficio_otimo = calcula_beneficio(mochila, vet_auxiliar);
-    
-                    *peso_otimo = calcula_peso(mochila, vet_auxiliar);
-                    for ( int i=0; i<mochila.N; i++)
-                    {
-                        printf("%d ",vetOtimo[i] );
+                    for(int j=0; j<mochila.N; j++){
+                        vetOtimo[j] = vet_auxiliar[j];
                     }
+
+                    *beneficio_otimo = calcula_beneficio(mochila, vet_auxiliar);
+                    *peso_otimo = calcula_peso(mochila, vet_auxiliar);
+                    int cont = 1;
+                    for ( int i=0; i<mochila.N; i++){
+                        //printf(  "%d",cont  );
+                        printf("%d ",vetOtimo[i] );
+                        if(cont == mochila.N){
+                          printf(" \n");
+                        }
+                        cont++;
+                    }
+
                     
                 }
-            }
-            else{
-                
-
             }
         }
         
@@ -217,12 +219,12 @@ void enumeracao(tipoMochila mochila, int vetOtimo[], float *peso_otimo, float *b
         printf("Este é o melhor subconjunto pelo metodo da Enumeracao");
         printf("\n");
         for (int i=0; i<mochila.N; i++){
-            printf("%d ",vetOtimo[i] ); 
+            printf("%d ",vetOtimo[i] );
         }
         printf("\n");
-        printf("Tendo o Peso : %f", *peso_otimo);
+        printf("Tendo o Peso : %g", *peso_otimo);
         printf("\n");
-        printf("Tendo o beneficio :%f ", *beneficio_otimo);
+        printf("Tendo o beneficio :%g ", *beneficio_otimo);
          
 }
 
