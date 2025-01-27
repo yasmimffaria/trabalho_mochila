@@ -1,8 +1,8 @@
 # MINI 4
-K 200
+K 6
 N 4
-I livro 50 35.0
-I caderno 40 5.0
-I caneta 100 2.0
-I lapis 80 1.0
+I livro 4 12
+I caderno 2 8
+I caneta 1 6
+I lapis 3 5
 F
