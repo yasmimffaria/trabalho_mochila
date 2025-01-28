@@ -240,7 +240,7 @@ void enumeracao(tipoMochila mochila, int vetOtimo[], float *peso_otimo, float *b
     printf("Tendo o beneficio :%g ", *beneficio_otimo);
 }
 
-void heuristica(tipoMochila mochila, int vetOtimo[])
+float heuristica(tipoMochila mochila, int vetOtimo[])
 {
     int vetorIndices[mochila.N];
     // Iniciando vetor com zeros
@@ -282,33 +282,32 @@ void heuristica(tipoMochila mochila, int vetOtimo[])
     // Acessando cada indice e somando beneficio e peso
     float somadorBeneficio = 0;
     float somadorPeso = 0;
-    int i = 0, pesoTemp, beneficioTemp; // Variaveis para calcular beneficio e peso
+    int vetorHeuristica[mochila.N]; // Vetor para os itens da heuristica
 
-    // Enquanto o peso da mochila nao for excedido, continue a pegar itens
-    while (somadorPeso <= mochila.K)
+    // Zerando vetor para evitar lixo de memoria
+    for (int i = 0; i < mochila.N; i++)
+        vetorHeuristica[i] = 0;
+
+    // Se item couber na mochila, coloque-o
+    for (int i = 0; i < mochila.N; i++)
     {
-        somadorBeneficio += mochila.beneficio[vetorIndices[i]];
-        somadorPeso += mochila.peso[vetorIndices[i]];
-        pesoTemp = mochila.peso[vetorIndices[i]];
-        beneficioTemp = mochila.beneficio[vetorIndices[i]];
-        i++;
+        if (mochila.K >= (somadorPeso + mochila.peso[vetorIndices[i]]))
+        {
+            vetorHeuristica[vetorIndices[i]] = 1;
+            somadorPeso += mochila.peso[vetorIndices[i]];
+            somadorBeneficio += mochila.beneficio[vetorIndices[i]];
+        }
     }
-    // Subtraindo excesso
-    somadorPeso = somadorPeso - pesoTemp;
-    somadorBeneficio = somadorBeneficio - beneficioTemp;
 
-    // printf("\n VETOR INDICES \n"); // imprime vetor com solução da heuristica
-    // for (int j = 0; j < mochila.N; j++)
-    // {
-    //     printf("%d ", vetorIndices[j]);
-    // }
+    printf("\nEste e o melhor subconjunto pelo metodo da heuristica:\n");
+    for (int j = 0; j < mochila.N; j++)
+    {
+        printf("%d ", vetorHeuristica[j]);
+    }
 
-    printf("\nPeso Guloso:%.2f", somadorPeso);
-    printf("\nBeneficio Guloso:%.2f", somadorBeneficio);
-
-    // printf("\nEste é o melhor subconjunto pelo método da heurística gulosa:");
-    // printf("\n--");
-    // prntf("\nGap(%%) = %d", )
+    printf("\nPeso: %.0f", calcula_peso(mochila, vetorHeuristica));
+    printf("\nBeneficio: %.1f", calcula_beneficio(mochila, vetorHeuristica));
+    return calcula_beneficio(mochila, vetorHeuristica);
 }
 
 int main(int argc, char **argv)
@@ -337,7 +336,7 @@ int main(int argc, char **argv)
     imprimirMochila(Mochila);
 
     // mostra os conjuntos
-    imprimirPotencia(Mochila);
+    //imprimirPotencia(Mochila);
 
     int vetOtimo[Mochila.N];
     float peso_otimo;
@@ -345,7 +344,14 @@ int main(int argc, char **argv)
     enumeracao(Mochila, vetOtimo, &peso_otimo, &beneficio_otimo);
 
     printf("\n\n");
-    heuristica(Mochila, vetOtimo);
+
+    // Retorna o beneficio da heuristica
+    float beneficioHeuristica;
+    beneficioHeuristica = heuristica(Mochila, vetOtimo);
+
+    // Gap
+    printf("\n\nGap(%%) = (%.1f - %.1f)/%.1f = %.0f%%", beneficio_otimo, beneficioHeuristica, beneficio_otimo, ((beneficio_otimo - beneficioHeuristica) / beneficio_otimo) * 100);
+
     //=====TESTE-FIM=====
     return 0;
 }
