@@ -124,18 +124,6 @@ tipoMochila criar_mochila(char *StrEntrada){
     return Mochila;
 }
 
-// Printa um Vetor
-void imprimirVet(int Vet[], int n){
-    printf("\n");
-    printf("####Vetor##### \n");
-
-    for (int i = 0; i < n; i++)
-    {
-        printf("%d", Vet[i]);
-    }
-    printf("\n");
-}
-
 // Printa todos os itens e detalhes da mochila
 void imprimirMochila(tipoMochila mochila){
     // printa o header
