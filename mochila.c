@@ -275,6 +275,35 @@ void heuristica(tipoMochila mochila, int vetOtimo[]){
     }
 
 }
+void geraRelatorio(char *StrSaida,char metedo, tipoMochila mochila, int vetOtimo[]){
+    FILE *saida = fopen(StrSaida, "w");
+    if (saida == NULL){
+        printf("Erro na abertura do arquivo\n");
+        return;
+    }
+    if (metedo == 'E'){
+        fprintf(saida, "Metodo Utilizado: Enumeração\n");
+    }else{
+        fprintf(saida, "Metodo Utilizado: Heuristica Gulosa \n");
+
+    }
+
+    fprintf(saida, "Qtd Itens: %d\n", mochila.N);
+    fprintf(saida, "Peso Maximo: %d\n", mochila.K);
+    fprintf(saida, "Peso Total: %.2f\n", calcula_peso(mochila, vetOtimo));
+    fprintf(saida, "Benefício Total: %.2f\n", calcula_beneficio(mochila, vetOtimo));
+    fprintf(saida, "Itens Selecionados:\n");
+
+    for (int i = 0; i < mochila.N; i++){
+        if (vetOtimo[i] == 1){
+            fprintf(saida, "Item: %s | Peso: %.2f | Benefício: %.2f\n",
+                    mochila.nome[i], mochila.peso[i], mochila.beneficio[i]);
+        }
+    }
+
+    fclose(saida);
+}
+
 
 int main(int argc, char **argv){
     // ===================================================
@@ -323,6 +352,8 @@ int main(int argc, char **argv){
         heuristica(Mochila, vetOtimo);
         imprimirSubconjunto(Mochila, vetOtimo);
     }
+    /*Falta so colocar o tipo de instrução rodada e tempo*/
+    geraRelatorio(StrSaida,metodo,Mochila,vetOtimo);
 
     return 0;
 }
